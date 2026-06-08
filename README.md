@@ -102,9 +102,9 @@ never touches `api.wheretheiss.at`.
 
 ## History
 
-Originally written on Laravel 5.7 with a Vue 2 + Bootstrap 4 frontend, then
-rewritten onto Laravel 12 as a pure API. See `UPGRADE.md` for the staged plan
-and `PROGRESS.md` for the decision log from the rewrite.
+Originally written on Laravel 5.7 with a Vue 2 + Bootstrap 4 frontend, later
+rewritten as a pure Laravel API and, for this demo variant, instrumented with
+nestedflowtracker.
 
 ## License
 

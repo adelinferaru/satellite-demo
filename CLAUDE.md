@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-A Laravel 12 API that wraps `api.wheretheiss.at` to expose the current International Space Station position and compute slant-range distance from any latitude/longitude to the ISS. Originally a Laravel 5.7 + Vue homework project; rewritten onto Laravel 12 as a pure API. See `UPGRADE.md` for the staged rewrite plan and `PROGRESS.md` for the decision log captured during the rewrite.
+A Laravel 13 API that wraps `api.wheretheiss.at` to expose the current International Space Station position and compute slant-range distance from any latitude/longitude to the ISS. This is the nestedflowtracker-instrumented demo variant used by [ISSWatch](https://github.com/adelinferaru/isswatch); the clean standalone API lives in [`adelinferaru/satellite`](https://github.com/adelinferaru/satellite).
 
 ## Toolchain
 
-System `PATH` on this machine resolves to **PHP 7.2.11**; the project requires **PHP 8.2+**. PHP 8.3 is installed at `C:\laragon\bin\php\php-8.3.19-nts-Win32-vs16-x64\php.exe`. Either fix `PATH` via Laragon (PHP → Version → 8.3.19) or invoke that binary explicitly.
+Requires **PHP 8.3+** (Laravel 13).
 
 Composer 2.8.9, Node not required (no frontend toolchain).
 
@@ -50,10 +50,6 @@ This is the slimmed-down skeleton — there is **no `app/Http/Kernel.php`** and 
 
 `phpunit.xml` already sets `CACHE_STORE=array`, so `Cache::remember` is test-isolated.
 
-## SQLite default
-
-`.env.example` ships with `DB_CONNECTION=sqlite`. Laragon's PHP doesn't load `pdo_sqlite` by default, so `php artisan migrate` warns. The app has no DB needs; either ignore the warning or change `.env` to `DB_CONNECTION=null` locally. Don't bother enabling `pdo_sqlite`.
-
 ## `composer dev` script
 
-The L12 skeleton's `composer dev` script tries to run `npm run dev` and `php artisan pail` alongside `artisan serve`. With no npm in this build it fails. **Use `php artisan serve` directly** as the canonical dev command.
+The Laravel skeleton's `composer dev` script tries to run `npm run dev` and `php artisan pail` alongside `artisan serve`. This API has no frontend toolchain, so **use `php artisan serve` directly** as the canonical dev command.
