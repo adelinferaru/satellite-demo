@@ -53,19 +53,22 @@ return [
         'flow' => [
             'driver' => env('FLOW_DB_DRIVER', 'sqlite'),
             'url' => env('FLOW_DB_URL'),
-            'host' => env('FLOW_DB_HOST', '127.0.0.1'),
-            'port' => env('FLOW_DB_PORT', '3306'),
+            'host' => env('FLOW_DB_HOST', env('DB_HOST', '127.0.0.1')),
+            'port' => env('FLOW_DB_PORT', env('DB_PORT', '3306')),
             'database' => env('FLOW_DB_DATABASE', database_path('flow.sqlite')),
-            'username' => env('FLOW_DB_USERNAME', 'forge'),
-            'password' => env('FLOW_DB_PASSWORD', ''),
+            'username' => env('FLOW_DB_USERNAME', env('DB_USERNAME', 'forge')),
+            'password' => env('FLOW_DB_PASSWORD', env('DB_PASSWORD', '')),
             'unix_socket' => env('FLOW_DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
+            'charset' => env('FLOW_DB_CHARSET', env('FLOW_DB_DRIVER', 'sqlite') === 'pgsql' ? 'utf8' : 'utf8mb4'),
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            // SQLite-only knobs (ignored by the MySQL driver):
+            // PostgreSQL knobs (ignored by the SQLite/MySQL drivers):
+            'search_path' => env('FLOW_DB_SEARCH_PATH', 'public'),
+            'sslmode' => env('FLOW_DB_SSLMODE', 'prefer'),
+            // SQLite-only knobs (ignored by the MySQL/PostgreSQL drivers):
             'foreign_key_constraints' => true,
             'busy_timeout' => 5000,
             'journal_mode' => 'WAL',

@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    // Upstream api.wheretheiss.at tuning. Read via config() so the values survive
+    // `php artisan config:cache` in production (never read these env() vars directly
+    // outside this config file).
+    'iss' => [
+        'http_timeout' => (int) env('ISS_HTTP_TIMEOUT', 5),
+        'cache_seconds' => (int) env('ISS_CACHE_SECONDS', 1),
+    ],
+
 ];

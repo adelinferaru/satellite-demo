@@ -12,7 +12,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(ISSContract::class, fn () => new ISSGateway(
-            timeoutSeconds: (int) env('ISS_HTTP_TIMEOUT', 5),
+            timeoutSeconds: (int) config('services.iss.http_timeout', 5),
+            cacheSeconds: (int) config('services.iss.cache_seconds', 1),
         ));
     }
 

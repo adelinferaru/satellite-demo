@@ -14,6 +14,7 @@ class ISSGateway implements ISSContract
     public function __construct(
         private readonly string $baseUrl = self::DEFAULT_BASE,
         private readonly int $timeoutSeconds = 5,
+        private readonly int $cacheSeconds = 1,
     ) {
     }
 
@@ -27,7 +28,7 @@ class ISSGateway implements ISSContract
         // Short cache to respect the upstream rate limit (350 req / 5 min) and to
         // absorb slow upstream TLS handshakes: while warm, polls return instantly.
         // The ISS moves ~7.6 km/s, so a few seconds' staleness is invisible on a
-        // world map. Tunable via ISS_CACHE_SECONDS.
+        // world map. Tunable via ISS_CACHE_SECONDS (config services.iss.cache_seconds).
         //
         // NB: use a *relative* integer TTL (evaluated when the value is stored,
         // after the slow call returns) — an absolute now()->addSeconds() expiry
@@ -42,7 +43,7 @@ class ISSGateway implements ISSContract
         $result = $this->call("satellites/{$id}");
 
         if (($result['result'] ?? 0) === 1) {
-            Cache::put($key, $result, (int) env('ISS_CACHE_SECONDS', 5));
+            Cache::put($key, $result, $this->cacheSeconds);
         }
 
         return $result;
